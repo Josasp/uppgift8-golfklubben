@@ -169,10 +169,5 @@ namespace uppgift8_golfklubben
             var bf = new BookingForm();
             bf.ShowDialog();
         }
-
-        private void GetGolfID(string birthdate) 
-        {
-        
-        }
     }
 }

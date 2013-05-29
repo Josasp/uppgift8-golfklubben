@@ -296,6 +296,7 @@
             this.Controls.Add(this.golfId_1_textBox);
             this.Controls.Add(this.label1);
             this.Name = "MemberForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Medlem";
             this.ResumeLayout(false);
             this.PerformLayout();
