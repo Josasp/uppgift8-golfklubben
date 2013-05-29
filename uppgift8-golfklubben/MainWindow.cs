@@ -17,9 +17,12 @@ namespace uppgift8_golfklubben
         public MainWindow()
         {
             InitializeComponent();
+            SetItemsEnabled(false);
+            Connect();
+
         }
 
-        protected NpgsqlConnection dbConnection;
+        public static NpgsqlConnection dbConnection;
 
         private void läggTillMedlemToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -56,37 +59,39 @@ namespace uppgift8_golfklubben
 
         private void anslutTillDatabasToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Connect();
+        }
+
+        private void Connect()
+        {
             //Simple check to see if all database conection info is provided
             if (!(
                 Settings.Default["db_address"].ToString().Length < 1 ||
                 Settings.Default["db_database"].ToString().Length < 1 ||
-                Settings.Default["db_username"].ToString().Length < 1 ||
-                Settings.Default["db_password"].ToString().Length < 1
+                Settings.Default["db_username"].ToString().Length < 1
                 ))
             {
                 //In case it is...
 
                 //Set port to default port if no other port has been set
-                String port = Settings.Default["db_port"].ToString().Length < 1 ? "5432" : Settings.Default["db_database"].ToString();
+                String port = Settings.Default["db_port"].ToString().Length < 1 ? "5432" : Settings.Default["db_port"].ToString();
 
                 //Set add SSL enabled to connction string if set in settings
-                String ssl = (bool)Settings.Default["db_ssl"]?"SSL=true;SslMode=Require;":"";
+                String ssl = (bool)Settings.Default["db_ssl"] ? "SSL=true;SslMode=Require;" : "";
 
                 //Connect to database
                 dbConnection = new NpgsqlConnection(
-                    "Server="       + Settings.Default["db_address"].ToString() +
-                    ";Port="        + port +
-                    ";User Id="     + Settings.Default["db_username"].ToString()  +
-                    ";Password="    + Settings.Default["db_password"].ToString()  +
-                    ";Database="    + Settings.Default["db_database"].ToString() +
+                    "Server=" + Settings.Default["db_address"].ToString() +
+                    ";Port=" + port +
+                    ";User Id=" + Settings.Default["db_username"].ToString() +
+                    ";Password=" + Settings.Default["db_password"].ToString() +
+                    ";Database=" + Settings.Default["db_database"].ToString() +
                     ";" + ssl);
 
                 try
                 {
                     dbConnection.Open();
-                    kopplaFrånDatabasToolStripMenuItem.Enabled = true;
-                    anslutTillDatabasToolStripMenuItem.Enabled = false;
-                    connected_statusLabel.Text = "Ansluten";
+                    SetItemsEnabled(true);
                 }
                 catch
                 {
@@ -103,12 +108,18 @@ namespace uppgift8_golfklubben
             }
         }
 
+        private void SetItemsEnabled(bool p)
+        {
+            anslutTillDatabasToolStripMenuItem.Enabled = !p;
+            kopplaFrånDatabasToolStripMenuItem.Enabled = p;
+            nyMedlemToolStripMenuItem.Enabled = p;
+            connected_statusLabel.Text = p ? "Ansluten" : "Frånkopplad";
+        }
+
         private void kopplaFrånDatabasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dbConnection.Close();
-            kopplaFrånDatabasToolStripMenuItem.Enabled = false;
-            anslutTillDatabasToolStripMenuItem.Enabled = true;
-            connected_statusLabel.Text = "Frånkopplad";
+            SetItemsEnabled(false);
         }
 
         private void nyMedlemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -116,7 +127,6 @@ namespace uppgift8_golfklubben
             Member m = new Member();
             var mf = new MemberForm(ref m);
             mf.ShowDialog();
-            MessageBox.Show(m.FirstName);
         }
 
         private void medlemslistaToolStripMenuItem_Click(object sender, EventArgs e)
