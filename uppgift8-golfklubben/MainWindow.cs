@@ -127,6 +127,13 @@ namespace uppgift8_golfklubben
             Member m = new Member();
             var mf = new MemberForm(ref m);
             mf.ShowDialog();
+            //--Dialog Closed
+
+            String sql = "INSERT INTO \"Medlem\" (\"Golf-ID\",\"Förnamn\",\"Efternamn\",\"Adress\",\"Postnr\",\"Stad\",\"Telefonnummer\",\"Epost\",\"Status_id\",\"BetalatÅr\",\"Handicap\")VALUES ('" + m.GolfId + "','" + m.FirstName + "','" + m.LastName + "','" + m.Adress + "','" + m.Zipcode + "','" + m.City + "','" + m.Phone + "','" + m.Email + "'," + m.Membership + ",'" + m.Paid + "'," + m.Handicap + ");";
+
+            NpgsqlCommand Command = new NpgsqlCommand(sql, MainWindow.dbConnection);
+            NpgsqlDataReader result = Command.ExecuteReader();
+
         }
 
         private void medlemslistaToolStripMenuItem_Click(object sender, EventArgs e)

@@ -61,19 +61,19 @@ namespace uppgift8_golfklubben
             {
                 SetAllInputs(false);
             }
-
+            DateTime dt = DateTime.Now;
             //TODO Should have some form checking before this, and some Injection Prevention
             m.GolfId = golfId_1_textBox.Text + "-" + golfId_2_textBox.Text;
             m.FirstName = firstName_textBox.Text;
             m.LastName = lastName_textBox.Text;
-            m.Membership = membership_comboBox.Text;
+            m.Membership = (membership_comboBox.SelectedIndex+1).ToString();
             m.Adress = adress_textBox.Text;
             m.Zipcode = zipcode_textBox.Text;
             m.City = city_textBox.Text;
             m.Phone = phone_textBox.Text;
             m.Email = email_textBox.Text;
             m.Handicap = handicap_textBox.Text;
-            m.Paid = paid_checkBox.Checked ? "1" : "0";
+            m.Paid = paid_checkBox.Checked ? dt.Year.ToString() : "0";
 
             this.Close();
         }
