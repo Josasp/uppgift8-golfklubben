@@ -17,6 +17,8 @@ namespace uppgift8_golfklubben
         private int tävling_id;
         private String state;
 
+        private BindingSource playerBindingSource;
+
         public CompetitionForm()
         {
             Init();
@@ -37,10 +39,41 @@ namespace uppgift8_golfklubben
             this.tävling_id = tävling_id;
             this.Text = "Ändra tävling: " + tävling_id.ToString();
             NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM \"Tävling\" WHERE \"Tävling_id\" = '" + tävling_id.ToString() + "';", MainWindow.dbConnection);
-            NpgsqlDataReader result = command.ExecuteReader();
-            result.Read();
-            name_textBox.Text = (String) result["namn"];
-            result.Close();
+            NpgsqlDataReader ndr = command.ExecuteReader();
+            ndr.Read();
+            name_textBox.Text = (String) ndr["namn"];
+            ndr.Close();
+
+            DataTable player_table = new DataTable("Table");
+            player_table.Columns.Add("Golf-ID", typeof(string));
+            player_table.Columns.Add("Namn", typeof(string));
+            player_table.Columns.Add("Handicap", typeof(string));
+            command = new NpgsqlCommand("SELECT    \"Medlem\".\"Golf-ID\",    \"Medlem\".\"Förnamn\",    \"Medlem\".\"Efternamn\",    \"Medlem\".\"Handicap\" FROM    public.\"Tävling_Medlem\",    public.\"Medlem\" WHERE    \"Tävling_Medlem\".\"Golf-ID\" = \"Medlem\".\"Golf-ID\" AND   \"Tävling_Medlem\".\"Tävling_id\" = " + tävling_id.ToString() + ";", MainWindow.dbConnection);
+            ndr = command.ExecuteReader();
+            while (ndr.Read())
+            {
+                DataRow dr = player_table.NewRow();
+                dr["Golf-ID"] = ndr["Golf-ID"];
+                dr["Namn"] = ndr["Förnamn"] + " " + ndr["Efternamn"];
+                dr["Handicap"] = ndr["Handicap"];
+                player_table.Rows.Add(dr);
+            }
+            ndr.Close();
+
+            SetPlayerTable(player_table);
+        }
+
+        private void SetPlayerTable(DataTable dt)
+        {
+            playerBindingSource = new BindingSource(dt, null);
+
+            //Set the component data
+            players_dataGridView.DataSource = playerBindingSource;
+
+            //Set column header text
+            players_dataGridView.Columns[0].HeaderText = "Golf-ID";
+            players_dataGridView.Columns[1].HeaderText = "Namn";
+            players_dataGridView.Columns[2].HeaderText = "Handicap";
         }
 
         private void Init()
@@ -48,7 +81,7 @@ namespace uppgift8_golfklubben
             InitializeComponent();
             time_comboBox.SelectedIndex = 0;
         }
-
+       
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
