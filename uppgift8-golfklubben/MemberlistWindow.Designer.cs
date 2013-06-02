@@ -95,6 +95,7 @@
             this.edit_toolStripButton.Name = "edit_toolStripButton";
             this.edit_toolStripButton.Size = new System.Drawing.Size(43, 22);
             this.edit_toolStripButton.Text = "Ändra";
+            this.edit_toolStripButton.Click += new System.EventHandler(this.edit_toolStripButton_Click);
             // 
             // remove_toolStripButton
             // 

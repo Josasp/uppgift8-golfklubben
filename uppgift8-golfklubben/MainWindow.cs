@@ -125,7 +125,7 @@ namespace uppgift8_golfklubben
         private void nyMedlemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Member m = new Member();
-            var mf = new MemberForm(ref m);
+            var mf = new MemberForm(ref m, "NEW");
             mf.ShowDialog();
             if (!m.IsEmpty)
             {

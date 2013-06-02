@@ -21,23 +21,13 @@ namespace uppgift8_golfklubben
 
         private DateTime dt = DateTime.Now;
 
-        public MemberForm(ref Member m)
+
+        public MemberForm(ref Member m, String state)
         {
             this.m = m;
             InitializeComponent();
             Init();
-            if (m.IsEmpty)
-            {
-                SetState("NEW");
-            }
-            else 
-            {
-                SetState("VIEW");
-            }
-
-            SetState();
-
-            
+            SetState(state);
         }
 
         private void SetState(String state)
@@ -73,8 +63,8 @@ namespace uppgift8_golfklubben
 
         private void SetFieldsEnabled(bool e)
         {
-            golfId_1_textBox.Enabled = e;
-            golfId_2_textBox.Enabled = e;
+            golfId_1_textBox.Enabled = false;
+            golfId_2_textBox.Enabled = false;
             firstName_textBox.Enabled = e;
             lastName_textBox.Enabled = e;
             adress_textBox.Enabled = e;

@@ -46,7 +46,7 @@ namespace uppgift8_golfklubben
         private void new_toolStripButton_Click(object sender, EventArgs e)
         {
             Member m = new Member();
-            var mf = new MemberForm(ref m);
+            var mf = new MemberForm(ref m, "NEW");
             mf.ShowDialog();
             if (!m.IsEmpty)
             {
@@ -57,6 +57,11 @@ namespace uppgift8_golfklubben
 
         private void view_toolStripButton_Click(object sender, EventArgs e)
         {
+            OpenMemberForm("VIEW");
+        }
+
+        private void OpenMemberForm(String state)
+        {
             String golfId = (string)members_dataGridView.SelectedRows[0].Cells[0].Value;
             NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM \"Medlem\" WHERE \"Golf-ID\" = '" + golfId + "';", MainWindow.dbConnection);
             NpgsqlDataReader ndr = command.ExecuteReader();
@@ -64,8 +69,8 @@ namespace uppgift8_golfklubben
             ndr.Read();
             Member m = new Member();
             m.GolfId = (string)ndr["Golf-ID"];
-            m.FirstName = (string) ndr["Förnamn"];
-            m.LastName = (string) ndr["Efternamn"];
+            m.FirstName = (string)ndr["Förnamn"];
+            m.LastName = (string)ndr["Efternamn"];
             m.Adress = (string)ndr["Adress"];
             m.Zipcode = (string)ndr["Postnr"];
             m.City = (string)ndr["Stad"];
@@ -79,8 +84,13 @@ namespace uppgift8_golfklubben
             m.Handicap = handi.ToString();
 
             ndr.Close();
-            var mf = new MemberForm(ref m);
+            var mf = new MemberForm(ref m, state);
             mf.ShowDialog();
+        }
+
+        private void edit_toolStripButton_Click(object sender, EventArgs e)
+        {
+            OpenMemberForm("EDIT");
         }
     }
 }
