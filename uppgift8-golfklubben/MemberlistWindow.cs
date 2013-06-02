@@ -98,10 +98,14 @@ namespace uppgift8_golfklubben
 
         private void remove_toolStripButton_Click(object sender, EventArgs e)
         {
-            /*
             String golfId = (string)members_dataGridView.SelectedRows[0].Cells[0].Value;
-            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM \"Medlem\" WHERE \"Golf-ID\" = '" + golfId + "';", MainWindow.dbConnection);
-            NpgsqlDataReader ndr = command.ExecuteReader(); */
+            DialogResult dialogResult = MessageBox.Show("Vill du verkligen ta bort medlemen? " + golfId, "Ta bort medlem", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                NpgsqlCommand command = new NpgsqlCommand("DELETE FROM \"Medlem\" WHERE \"Golf-ID\" = '" + golfId + "';", MainWindow.dbConnection);
+                NpgsqlDataReader ndr = command.ExecuteReader(); 
+            }
+            SetDataTable(MainWindow.GetMemberTable());
         }
     }
 }
