@@ -112,8 +112,12 @@ namespace uppgift8_golfklubben
         {
             anslutTillDatabasToolStripMenuItem.Enabled = !p;
             kopplaFrånDatabasToolStripMenuItem.Enabled = p;
+            medlemToolStripMenuItem.Enabled = p;
             nyMedlemToolStripMenuItem.Enabled = p;
             connected_statusLabel.Text = p ? "Ansluten" : "Frånkopplad";
+            tävlingarToolStripMenuItem.Enabled = p;
+            nyTävlingToolStripMenuItem.Enabled = p;
+            tävlingslistaToolStripMenuItem.Enabled = p;
         }
 
         private void kopplaFrånDatabasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -201,6 +205,42 @@ namespace uppgift8_golfklubben
             return dt;
         }
 
+        public static DataTable GetCompetitionTable()
+        {
+            //Create the empty table data
+            DataTable dt = new DataTable("Table");
+            dt.Columns.Add("id", typeof(string));
+            dt.Columns.Add("name", typeof(string));
+            dt.Columns.Add("participants", typeof(string));
+            dt.Columns.Add("date", typeof(string));
+            dt.Columns.Add("deadline", typeof(string));
+            dt.Columns.Add("open", typeof(bool));
+            NpgsqlCommand command = new NpgsqlCommand("SELECT  \"Tävling\".\"Tävling_id\", \"Tävling\".\"Namn\", (SELECT \"Bokning_id\" FROM \"Bokning\" WHERE \"Bokning\".\"Tävling_id\" = \"Tävling\".\"Tävling_id\" ORDER BY 1 ASC LIMIT 1) AS \"Bokning_id\", COUNT(\"Golf-ID\") AS deltagare, (SELECT \"Tid\" FROM \"Tid\", \"Bokning\" WHERE \"Tid\".\"Bokning_id\" = \"Bokning\".\"Bokning_id\" AND \"Bokning\".\"Tävling_id\" = \"Tävling\".\"Tävling_id\"  ORDER BY 1 ASC LIMIT 1)AS \"datum\", \"SistaAnmälan\" FROM \"Tävling\" LEFT JOIN \"Tävling_Medlem\" ON \"Tävling_Medlem\".\"Tävling_id\" = \"Tävling\".\"Tävling_id\" GROUP BY \"Tävling\".\"Tävling_id\" ORDER BY 1 ASC;", dbConnection);
+            NpgsqlDataReader ndr = command.ExecuteReader();
+            DateTime now = DateTime.Now;
+            while (ndr.Read())
+            {
+                DataRow dr = dt.NewRow();
+                dr["id"] = ndr["Tävling_id"];
+                dr["name"] = ndr["namn"];
+                dr["participants"] = ndr["deltagare"];
+                dr["date"] = ndr["datum"];
+                dr["deadline"] = ndr["SistaAnmälan"];
+
+                if (!ndr["SistaAnmälan"].ToString().Equals(""))
+                {
+                    dr["open"] = DateTime.Compare(now, (DateTime)ndr["SistaAnmälan"]) <= 0;
+                }
+                else
+                {
+                    dr["open"] = false;
+                }
+                dt.Rows.Add(dr);
+            }
+            ndr.Close();
+            return dt;
+        }
+
         private void bookinglist_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var bw = new BookingWindow();
@@ -212,6 +252,13 @@ namespace uppgift8_golfklubben
         {
             var bf = new BookingForm();
             bf.ShowDialog();
+        }
+
+        private void tävlingslistaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cw = new CompetitionlistWindow();
+            cw.MdiParent = this;
+            cw.Show();
         }
     }
 }

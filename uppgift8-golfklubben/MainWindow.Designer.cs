@@ -126,19 +126,19 @@
             // nyMedlemToolStripMenuItem
             // 
             this.nyMedlemToolStripMenuItem.Name = "nyMedlemToolStripMenuItem";
-            this.nyMedlemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nyMedlemToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.nyMedlemToolStripMenuItem.Text = "Ny medlem";
             this.nyMedlemToolStripMenuItem.Click += new System.EventHandler(this.nyMedlemToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(141, 6);
             // 
             // medlemslistaToolStripMenuItem
             // 
             this.medlemslistaToolStripMenuItem.Name = "medlemslistaToolStripMenuItem";
-            this.medlemslistaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.medlemslistaToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.medlemslistaToolStripMenuItem.Text = "Medlemslista";
             this.medlemslistaToolStripMenuItem.Click += new System.EventHandler(this.medlemslistaToolStripMenuItem_Click);
             // 
@@ -154,7 +154,6 @@
             // 
             // nyTävlingToolStripMenuItem
             // 
-            this.nyTävlingToolStripMenuItem.Enabled = false;
             this.nyTävlingToolStripMenuItem.Name = "nyTävlingToolStripMenuItem";
             this.nyTävlingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.nyTävlingToolStripMenuItem.Text = "Ny Tävling";
@@ -166,10 +165,10 @@
             // 
             // tävlingslistaToolStripMenuItem
             // 
-            this.tävlingslistaToolStripMenuItem.Enabled = false;
             this.tävlingslistaToolStripMenuItem.Name = "tävlingslistaToolStripMenuItem";
             this.tävlingslistaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tävlingslistaToolStripMenuItem.Text = "Tävlingslista";
+            this.tävlingslistaToolStripMenuItem.Click += new System.EventHandler(this.tävlingslistaToolStripMenuItem_Click);
             // 
             // tidsbokningToolStripMenuItem
             // 
@@ -178,6 +177,7 @@
             this.bokaÖvrigVerksamhetToolStripMenuItem,
             this.toolStripSeparator4,
             this.bookinglist_ToolStripMenuItem});
+            this.tidsbokningToolStripMenuItem.Enabled = false;
             this.tidsbokningToolStripMenuItem.Name = "tidsbokningToolStripMenuItem";
             this.tidsbokningToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
             this.tidsbokningToolStripMenuItem.Text = "Tidsbokning";
