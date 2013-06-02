@@ -45,5 +45,13 @@ namespace uppgift8_golfklubben
             SetDataTable(MainWindow.GetCompetitionTable());
         }
 
+        private void ändraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int tävling_id = int.Parse((string)dataGridView.SelectedRows[0].Cells[0].Value);
+            var ct = new CompetitionForm(tävling_id);
+            ct.ShowDialog();
+            SetDataTable(MainWindow.GetCompetitionTable());
+        }
+
     }
 }

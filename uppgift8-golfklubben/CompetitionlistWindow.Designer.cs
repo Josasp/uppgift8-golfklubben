@@ -31,6 +31,7 @@
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.nyTävlingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.ändraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,12 +65,20 @@
             // 
             this.menuStrip1.AllowMerge = false;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nyTävlingToolStripMenuItem});
+            this.nyTävlingToolStripMenuItem,
+            this.ändraToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(680, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // ändraToolStripMenuItem
+            // 
+            this.ändraToolStripMenuItem.Name = "ändraToolStripMenuItem";
+            this.ändraToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.ändraToolStripMenuItem.Text = "Ändra";
+            this.ändraToolStripMenuItem.Click += new System.EventHandler(this.ändraToolStripMenuItem_Click);
             // 
             // CompetitionlistWindow
             // 
@@ -94,5 +103,6 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.ToolStripMenuItem nyTävlingToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem ändraToolStripMenuItem;
     }
 }

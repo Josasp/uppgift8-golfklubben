@@ -15,18 +15,32 @@ namespace uppgift8_golfklubben
     {
         private DateTime date = DateTime.Now;
         private int tävling_id;
+        private String state;
 
         public CompetitionForm()
         {
             Init();
+            state = "NEW";
             SetContentFieldsEnabled(false);
         }
 
         public CompetitionForm(int tävling_id)
         {
             Init();
+            EditMode(tävling_id);
+        }
+
+        private void EditMode(int tävling_id)
+        {
+            state = "EDIT";
             SetContentFieldsEnabled(true);
             this.tävling_id = tävling_id;
+            this.Text = "Ändra tävling: " + tävling_id.ToString();
+            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM \"Tävling\" WHERE \"Tävling_id\" = '" + tävling_id.ToString() + "';", MainWindow.dbConnection);
+            NpgsqlDataReader result = command.ExecuteReader();
+            result.Read();
+            name_textBox.Text = (String) result["namn"];
+            result.Close();
         }
 
         private void Init()
@@ -42,17 +56,35 @@ namespace uppgift8_golfklubben
 
         private void saveName_button_Click(object sender, EventArgs e)
         {
-            NpgsqlCommand command = new NpgsqlCommand("INSERT INTO \"Tävling\" (\"Namn\", \"SistaAnmälan\") VALUES (:name, :date); SELECT CURRVAL(pg_get_serial_sequence('\"Tävling\"','Tävling_id'));", MainWindow.dbConnection);
-            command.Parameters.Add(new NpgsqlParameter(":name", DbType.String));
-            command.Parameters.Add(new NpgsqlParameter(":date", DbType.DateTime));
-            command.Parameters[0].Value = name_textBox.Text;
-            command.Parameters[1].Value = date;
-            NpgsqlDataReader result = command.ExecuteReader();
-            result.Read();
-            tävling_id = (int) result["currval"];
-            this.Text = "Ändra tävling: " + result["currval"];
-            result.Close();
-            SetContentFieldsEnabled(true);
+            if (state.Equals("NEW"))
+            {
+                NpgsqlCommand command = new NpgsqlCommand("INSERT INTO \"Tävling\" (\"Namn\", \"SistaAnmälan\") VALUES (:name, :date); SELECT CURRVAL(pg_get_serial_sequence('\"Tävling\"','Tävling_id'));", MainWindow.dbConnection);
+                command.Parameters.Add(new NpgsqlParameter(":name", DbType.String));
+                command.Parameters.Add(new NpgsqlParameter(":date", DbType.DateTime));
+                command.Parameters[0].Value = name_textBox.Text;
+                command.Parameters[1].Value = date;
+                NpgsqlDataReader result = command.ExecuteReader();
+                result.Read();
+                int curval = Convert.ToInt32(result["currval"]);
+                result.Close();
+                EditMode(curval);
+                
+            }
+            else if (state.Equals("EDIT") && !name_textBox.Enabled)
+            {
+                SetContentFieldsEnabled(false);
+            }
+            else if (state.Equals("EDIT") && name_textBox.Enabled)
+            {
+                NpgsqlCommand command = new NpgsqlCommand("UPDATE \"Tävling\" SET (\"Namn\", \"SistaAnmälan\") = (:name, :date) WHERE \"Tävling_id\" = '" + tävling_id.ToString() + "';", MainWindow.dbConnection);
+                command.Parameters.Add(new NpgsqlParameter(":name", DbType.String));
+                command.Parameters.Add(new NpgsqlParameter(":date", DbType.DateTime));
+                command.Parameters[0].Value = name_textBox.Text;
+                command.Parameters[1].Value = date;
+                NpgsqlDataReader result = command.ExecuteReader();
+                EditMode(tävling_id);
+                result.Close();
+            }
         }
 
         private void SetContentFieldsEnabled(bool b) 
@@ -71,6 +103,8 @@ namespace uppgift8_golfklubben
             date_textBox.Enabled = !b;
             time_comboBox.Enabled = !b;
             monthCalendar.Enabled = !b;
+
+            saveName_button.Text = !b ? "Spara" : "Ändra";
         }
 
         private void monthCalendar_DateChanged(object sender, DateRangeEventArgs e)

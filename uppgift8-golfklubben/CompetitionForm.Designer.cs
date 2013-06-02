@@ -231,7 +231,7 @@
             this.saveName_button.Name = "saveName_button";
             this.saveName_button.Size = new System.Drawing.Size(53, 23);
             this.saveName_button.TabIndex = 18;
-            this.saveName_button.Text = "Spara";
+            this.saveName_button.Text = "Skapa";
             this.saveName_button.UseVisualStyleBackColor = true;
             this.saveName_button.Click += new System.EventHandler(this.saveName_button_Click);
             // 
