@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -52,6 +53,34 @@ namespace uppgift8_golfklubben
                 MainWindow.InsertMember(m); 
             }
             SetDataTable(MainWindow.GetMemberTable());
+        }
+
+        private void view_toolStripButton_Click(object sender, EventArgs e)
+        {
+            String golfId = (string)members_dataGridView.SelectedRows[0].Cells[0].Value;
+            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM \"Medlem\" WHERE \"Golf-ID\" = '" + golfId + "';", MainWindow.dbConnection);
+            NpgsqlDataReader ndr = command.ExecuteReader();
+
+            ndr.Read();
+            Member m = new Member();
+            m.GolfId = (string)ndr["Golf-ID"];
+            m.FirstName = (string) ndr["Förnamn"];
+            m.LastName = (string) ndr["Efternamn"];
+            m.Adress = (string)ndr["Adress"];
+            m.Zipcode = (string)ndr["Postnr"];
+            m.City = (string)ndr["Stad"];
+            m.Phone = (string)ndr["Telefonnummer"];
+            m.Email = (string)ndr["Epost"];
+            int status_id = (int)ndr["Status_id"];
+            m.Membership = status_id.ToString();
+            int betalatår = (int)ndr["BetalatÅr"];
+            m.Paid = betalatår.ToString();
+            double handi = (double)ndr["Handicap"];
+            m.Handicap = handi.ToString();
+
+            ndr.Close();
+            var mf = new MemberForm(ref m);
+            mf.ShowDialog();
         }
     }
 }

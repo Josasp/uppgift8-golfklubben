@@ -75,6 +75,7 @@
     <Compile Include="FindGolfIdDialog.Designer.cs">
       <DependentUpon>FindGolfIdDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Medlem.cs" />
     <Compile Include="MemberlistWindow.cs">
       <SubType>Form</SubType>
     </Compile>

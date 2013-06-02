@@ -190,6 +190,7 @@ namespace uppgift8_golfklubben
                 dr["paid"] = (2013 == (int)ndr["BetalatÅr"]);
                 dt.Rows.Add(dr);
             }
+            ndr.Close();
             return dt;
         }
 

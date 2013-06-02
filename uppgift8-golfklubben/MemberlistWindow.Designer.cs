@@ -85,6 +85,7 @@
             this.view_toolStripButton.Name = "view_toolStripButton";
             this.view_toolStripButton.Size = new System.Drawing.Size(32, 22);
             this.view_toolStripButton.Text = "Visa";
+            this.view_toolStripButton.Click += new System.EventHandler(this.view_toolStripButton_Click);
             // 
             // edit_toolStripButton
             // 

@@ -19,22 +19,88 @@ namespace uppgift8_golfklubben
         //Form state, can be ACTION, EDIT, NEW, VIEW
         private String state = "ACTION";
 
+        private DateTime dt = DateTime.Now;
+
         public MemberForm(ref Member m)
         {
             this.m = m;
             InitializeComponent();
-
+            Init();
             if (m.IsEmpty)
             {
-                state = "NEW";
+                SetState("NEW");
+            }
+            else 
+            {
+                SetState("VIEW");
             }
 
+            SetState();
+
+            
+        }
+
+        private void SetState(String state)
+        {
+            this.state = state;
+            SetState();
+        }
+
+        private void SetState()
+        {
             if (state.Equals("NEW"))
             {
                 this.Text = "Ny Medlem";
                 action_button.Text = "Skapa";
             }
-            Init();
+
+            if (state.Equals("VIEW"))
+            {
+                FillMemberData();
+                this.Text = "Visa medlem: " + m.GolfId;
+                action_button.Text = "Ändra";
+                SetFieldsEnabled(false);
+            }
+
+            if (state.Equals("EDIT"))
+            {
+                FillMemberData();
+                this.Text = "Ändra medlem: " + m.GolfId;
+                action_button.Text = "Spara";
+                SetFieldsEnabled(true);
+            }
+        }
+
+        private void SetFieldsEnabled(bool e)
+        {
+            golfId_1_textBox.Enabled = e;
+            golfId_2_textBox.Enabled = e;
+            firstName_textBox.Enabled = e;
+            lastName_textBox.Enabled = e;
+            adress_textBox.Enabled = e;
+            zipcode_textBox.Enabled = e;
+            city_textBox.Enabled = e;
+            phone_textBox.Enabled = e;
+            email_textBox.Enabled = e;
+            membership_comboBox.Enabled = e;
+            handicap_textBox.Enabled = e;
+            paid_checkBox.Enabled = e;
+        }
+
+        private void FillMemberData() 
+        {
+            golfId_1_textBox.Text = m.GolfId.Substring(0, 6);
+            golfId_2_textBox.Text = m.GolfId.Substring(7, 3);
+            firstName_textBox.Text = m.FirstName;
+            lastName_textBox.Text = m.LastName;
+            adress_textBox.Text = m.Adress;
+            zipcode_textBox.Text = m.Zipcode;
+            city_textBox.Text = m.City;
+            phone_textBox.Text = m.Phone;
+            email_textBox.Text = m.Email;
+            membership_comboBox.SelectedIndex = int.Parse(m.Membership)-1;
+            paid_checkBox.Checked = int.Parse(m.Paid) >= int.Parse(dt.Year.ToString());
+            handicap_textBox.Text = m.Handicap;
         }
 
         private void Init()
@@ -59,41 +125,23 @@ namespace uppgift8_golfklubben
         {
             if (state.Equals("VIEW"))
             {
-                SetAllInputs(false);
+                SetState("EDIT");
             }
-            DateTime dt = DateTime.Now;
-            //TODO Should have some form checking before this, and some Injection Prevention
-            m.GolfId = golfId_1_textBox.Text + "-" + golfId_2_textBox.Text;
-            m.FirstName = firstName_textBox.Text;
-            m.LastName = lastName_textBox.Text;
-            m.Membership = (membership_comboBox.SelectedIndex+1).ToString();
-            m.Adress = adress_textBox.Text;
-            m.Zipcode = zipcode_textBox.Text;
-            m.City = city_textBox.Text;
-            m.Phone = phone_textBox.Text;
-            m.Email = email_textBox.Text;
-            m.Handicap = handicap_textBox.Text;
-            m.Paid = paid_checkBox.Checked ? dt.Year.ToString() : "0";
-
-            this.Close();
-        }
-
-        /**
-         * Sets all input field and boxes to enabled state if true 
-         */
-        private void SetAllInputs(Boolean enabled)
-        {
-            golfId_1_textBox.Enabled = enabled;
-            firstName_textBox.Enabled = enabled;
-            lastName_textBox.Enabled = enabled;
-            adress_textBox.Enabled = enabled;
-            zipcode_textBox.Enabled = enabled;
-            city_textBox.Enabled = enabled;
-            phone_textBox.Enabled = enabled;
-            email_textBox.Enabled = enabled;
-            membership_comboBox.Enabled = enabled;
-            handicap_textBox.Enabled = enabled;
-            paid_checkBox.Enabled = enabled;
+            else if (state.Equals("NEW") || state.Equals("EDIT"))
+            {
+                m.GolfId = golfId_1_textBox.Text + "-" + golfId_2_textBox.Text;
+                m.FirstName = firstName_textBox.Text;
+                m.LastName = lastName_textBox.Text;
+                m.Membership = (membership_comboBox.SelectedIndex + 1).ToString();
+                m.Adress = adress_textBox.Text;
+                m.Zipcode = zipcode_textBox.Text;
+                m.City = city_textBox.Text;
+                m.Phone = phone_textBox.Text;
+                m.Email = email_textBox.Text;
+                m.Handicap = handicap_textBox.Text;
+                m.Paid = paid_checkBox.Checked ? dt.Year.ToString() : "0";
+                this.Close();
+            }
         }
 
         private String GetGolfIDSerial(String date)
