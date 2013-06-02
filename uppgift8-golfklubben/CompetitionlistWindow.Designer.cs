@@ -58,6 +58,7 @@
             this.nyTävlingToolStripMenuItem.Name = "nyTävlingToolStripMenuItem";
             this.nyTävlingToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.nyTävlingToolStripMenuItem.Text = "Ny tävling";
+            this.nyTävlingToolStripMenuItem.Click += new System.EventHandler(this.nyTävlingToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 

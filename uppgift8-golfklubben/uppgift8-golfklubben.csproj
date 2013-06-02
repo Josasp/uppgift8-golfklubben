@@ -63,6 +63,12 @@
     <Compile Include="BookingWindow.Designer.cs">
       <DependentUpon>BookingWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="CompetitionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompetitionForm.Designer.cs">
+      <DependentUpon>CompetitionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompetitionlistWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BookingWindow.resx">
       <DependentUpon>BookingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompetitionForm.resx">
+      <DependentUpon>CompetitionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompetitionlistWindow.resx">
       <DependentUpon>CompetitionlistWindow.cs</DependentUpon>

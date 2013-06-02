@@ -38,5 +38,11 @@ namespace uppgift8_golfklubben
             dataGridView.Columns[5].HeaderText = "Anmälan öppen";
         }
 
+        private void nyTävlingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ct = new CompetitionForm();
+            ct.ShowDialog();
+        }
+
     }
 }
