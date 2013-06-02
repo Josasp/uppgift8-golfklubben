@@ -17,11 +17,18 @@ namespace uppgift8_golfklubben
 
         public MemberlistWindow(DataTable dt)
         {
-            this.dt = dt;
-            bs = new BindingSource(dt, null);
+
 
             //Draw GUI
             InitializeComponent();
+
+            SetDataTable(dt);
+        }
+
+        private void SetDataTable(DataTable dt)
+        {
+            this.dt = dt;
+            bs = new BindingSource(dt, null);
 
             //Set the component data
             members_dataGridView.DataSource = bs;
@@ -31,7 +38,8 @@ namespace uppgift8_golfklubben
             members_dataGridView.Columns[1].HeaderText = "Förnamn";
             members_dataGridView.Columns[2].HeaderText = "Efternamn";
             members_dataGridView.Columns[3].HeaderText = "Medlemskap";
-            members_dataGridView.Columns[4].HeaderText = "Betalat";
+            members_dataGridView.Columns[4].HeaderText = "Handicap";
+            members_dataGridView.Columns[5].HeaderText = "Betalat";
         }
 
         private void new_toolStripButton_Click(object sender, EventArgs e)
@@ -39,8 +47,11 @@ namespace uppgift8_golfklubben
             Member m = new Member();
             var mf = new MemberForm(ref m);
             mf.ShowDialog();
-
-
+            if (!m.IsEmpty)
+            {
+                MainWindow.InsertMember(m); 
+            }
+            SetDataTable(MainWindow.GetMemberTable());
         }
     }
 }

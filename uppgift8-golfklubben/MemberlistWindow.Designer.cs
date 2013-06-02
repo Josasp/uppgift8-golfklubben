@@ -43,13 +43,17 @@
             // 
             this.members_dataGridView.AllowUserToAddRows = false;
             this.members_dataGridView.AllowUserToDeleteRows = false;
+            this.members_dataGridView.AllowUserToResizeRows = false;
             this.members_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.members_dataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.members_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.members_dataGridView.Location = new System.Drawing.Point(0, 28);
+            this.members_dataGridView.MultiSelect = false;
             this.members_dataGridView.Name = "members_dataGridView";
             this.members_dataGridView.ReadOnly = true;
+            this.members_dataGridView.RowHeadersVisible = false;
             this.members_dataGridView.RowTemplate.Height = 24;
+            this.members_dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.members_dataGridView.Size = new System.Drawing.Size(584, 336);
             this.members_dataGridView.TabIndex = 0;
             // 
