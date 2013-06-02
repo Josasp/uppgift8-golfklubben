@@ -229,11 +229,11 @@ namespace uppgift8_golfklubben
 
                 if (!ndr["SistaAnmälan"].ToString().Equals(""))
                 {
-                    dr["open"] = DateTime.Compare(now, (DateTime)ndr["SistaAnmälan"]) <= 0;
+                    dr["open"] = !(DateTime.Compare(now, (DateTime)ndr["SistaAnmälan"]) <= 0);
                 }
                 else
                 {
-                    dr["open"] = false;
+                    dr["open"] = !false;
                 }
                 dt.Rows.Add(dr);
             }

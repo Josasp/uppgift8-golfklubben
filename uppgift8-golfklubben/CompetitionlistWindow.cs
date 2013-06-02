@@ -35,13 +35,14 @@ namespace uppgift8_golfklubben
             dataGridView.Columns[2].HeaderText = "Deltagare";
             dataGridView.Columns[3].HeaderText = "Datum";
             dataGridView.Columns[4].HeaderText = "Sista anmälan";
-            dataGridView.Columns[5].HeaderText = "Anmälan öppen";
+            dataGridView.Columns[5].HeaderText = "Stängd anmälan";
         }
 
         private void nyTävlingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var ct = new CompetitionForm();
             ct.ShowDialog();
+            SetDataTable(MainWindow.GetCompetitionTable());
         }
 
     }
