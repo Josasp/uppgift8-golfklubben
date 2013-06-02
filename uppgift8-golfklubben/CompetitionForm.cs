@@ -172,5 +172,22 @@ namespace uppgift8_golfklubben
         {
             UpdateDateTime();
         }
+
+        private void remove_button_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Vill du verkligen ta bort tävlingen? " + tävling_id, "Ta bort tävling", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                NpgsqlCommand command = new NpgsqlCommand("DELETE FROM \"Tävling\" WHERE \"Tävling_id\" = '" + tävling_id + "';", MainWindow.dbConnection);
+                NpgsqlDataReader ndr = command.ExecuteReader();
+                ndr.Close();
+            }
+            this.Close();
+        }
+
+        private void ok_button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

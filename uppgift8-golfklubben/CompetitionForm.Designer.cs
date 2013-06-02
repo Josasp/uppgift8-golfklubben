@@ -215,6 +215,7 @@
             this.ok_button.TabIndex = 16;
             this.ok_button.Text = "Klar";
             this.ok_button.UseVisualStyleBackColor = true;
+            this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
             // 
             // remove_button
             // 
@@ -224,6 +225,7 @@
             this.remove_button.TabIndex = 17;
             this.remove_button.Text = "Radera";
             this.remove_button.UseVisualStyleBackColor = true;
+            this.remove_button.Click += new System.EventHandler(this.remove_button_Click);
             // 
             // saveName_button
             // 
