@@ -105,6 +105,7 @@
             this.remove_toolStripButton.Name = "remove_toolStripButton";
             this.remove_toolStripButton.Size = new System.Drawing.Size(49, 22);
             this.remove_toolStripButton.Text = "Ta bort";
+            this.remove_toolStripButton.Click += new System.EventHandler(this.remove_toolStripButton_Click);
             // 
             // MemberlistWindow
             // 

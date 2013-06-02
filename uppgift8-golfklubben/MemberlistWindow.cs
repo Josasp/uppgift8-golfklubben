@@ -86,11 +86,22 @@ namespace uppgift8_golfklubben
             ndr.Close();
             var mf = new MemberForm(ref m, state);
             mf.ShowDialog();
+            MainWindow.UpdateMember(m);
+            SetDataTable(MainWindow.GetMemberTable());
+
         }
 
         private void edit_toolStripButton_Click(object sender, EventArgs e)
         {
             OpenMemberForm("EDIT");
+        }
+
+        private void remove_toolStripButton_Click(object sender, EventArgs e)
+        {
+            /*
+            String golfId = (string)members_dataGridView.SelectedRows[0].Cells[0].Value;
+            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM \"Medlem\" WHERE \"Golf-ID\" = '" + golfId + "';", MainWindow.dbConnection);
+            NpgsqlDataReader ndr = command.ExecuteReader(); */
         }
     }
 }

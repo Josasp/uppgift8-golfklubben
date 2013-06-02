@@ -140,6 +140,13 @@ namespace uppgift8_golfklubben
             NpgsqlDataReader result = Command.ExecuteReader();
         }
 
+        public static void UpdateMember(Member m)
+        {
+            String sql = "UPDATE \"Medlem\" SET (\"Golf-ID\",\"Förnamn\",\"Efternamn\",\"Adress\",\"Postnr\",\"Stad\",\"Telefonnummer\",\"Epost\",\"Status_id\",\"BetalatÅr\",\"Handicap\") = ('" + m.GolfId + "','" + m.FirstName + "','" + m.LastName + "','" + m.Adress + "','" + m.Zipcode + "','" + m.City + "','" + m.Phone + "','" + m.Email + "'," + m.Membership + ",'" + m.Paid + "'," + m.Handicap + ") WHERE \"Golf-ID\" = '" + m.GolfId + "';";
+            NpgsqlCommand Command = new NpgsqlCommand(sql, MainWindow.dbConnection);
+            NpgsqlDataReader result = Command.ExecuteReader();
+        }
+
         private void medlemslistaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataTable mt = GetMemberTable();
