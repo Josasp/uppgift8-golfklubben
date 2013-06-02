@@ -103,7 +103,8 @@ namespace uppgift8_golfklubben
             if (dialogResult == DialogResult.Yes)
             {
                 NpgsqlCommand command = new NpgsqlCommand("DELETE FROM \"Medlem\" WHERE \"Golf-ID\" = '" + golfId + "';", MainWindow.dbConnection);
-                NpgsqlDataReader ndr = command.ExecuteReader(); 
+                NpgsqlDataReader ndr = command.ExecuteReader();
+                ndr.Close();
             }
             SetDataTable(MainWindow.GetMemberTable());
         }

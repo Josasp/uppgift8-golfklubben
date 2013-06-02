@@ -32,6 +32,7 @@
             this.nyTävlingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ändraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.taBortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +67,8 @@
             this.menuStrip1.AllowMerge = false;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nyTävlingToolStripMenuItem,
-            this.ändraToolStripMenuItem});
+            this.ändraToolStripMenuItem,
+            this.taBortToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(680, 24);
@@ -79,6 +81,13 @@
             this.ändraToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.ändraToolStripMenuItem.Text = "Ändra";
             this.ändraToolStripMenuItem.Click += new System.EventHandler(this.ändraToolStripMenuItem_Click);
+            // 
+            // taBortToolStripMenuItem
+            // 
+            this.taBortToolStripMenuItem.Name = "taBortToolStripMenuItem";
+            this.taBortToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.taBortToolStripMenuItem.Text = "Ta bort";
+            this.taBortToolStripMenuItem.Click += new System.EventHandler(this.taBortToolStripMenuItem_Click);
             // 
             // CompetitionlistWindow
             // 
@@ -104,5 +113,6 @@
         private System.Windows.Forms.ToolStripMenuItem nyTävlingToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem ändraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem taBortToolStripMenuItem;
     }
 }
